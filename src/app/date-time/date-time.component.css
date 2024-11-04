@@ -1,0 +1,12 @@
+.date-time {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px 0;
+}
+
+.date-time p {
+  margin: 5px 0;
+}

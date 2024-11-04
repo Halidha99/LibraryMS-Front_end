@@ -1,0 +1,119 @@
+.header {
+  height: 70px;
+  padding: 20px 50px;
+  background-color: #113c60;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 5px 5px 5px #939393;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-text {
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 10px;
+  white-space: nowrap;
+}
+
+.logo-image {
+  width: 50px;
+  height: 50px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+}
+
+.user-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background-color: rgb(11, 107, 185);
+  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold; 
+}
+
+.logo:hover,
+.user:hover {
+  opacity: 0.9;
+}
+
+
+@media only screen and (max-width: 1024px) {
+  .header {
+    padding: 15px 40px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .user-image,
+  .logo-image {
+    width: 45px;
+    height: 45px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .header {
+    padding: 10px 20px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+    margin-left: 5px;
+  }
+
+  .logo-image,
+  .user-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .user {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    height: auto;
+    padding: 15px;
+    align-items: flex-start;
+  }
+
+  .user {
+    margin-top: 10px;
+    font-size: 12px;
+  }
+
+  .logo-text {
+    font-size: 14px;
+  }
+
+  .logo-image,
+  .user-image {
+    width: 35px;
+    height: 35px;
+  }
+}
