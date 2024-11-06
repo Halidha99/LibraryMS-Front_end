@@ -1,0 +1,59 @@
+<h2 class="add-member" style="text-align: center;">
+  <i class="bi bi-people-fill"></i> <u>Add Members</u>
+</h2>
+<div class="manage-books-container">
+  <!-- Form Section for Adding Members -->
+  <div class="form-section">
+    <h2>Add Member</h2>
+    <form #memberForm="ngForm" (ngSubmit)="addMember()" novalidate>
+      <div class="row mb-3">
+        <label for="name" class="form-label">Enter Name <i class="bi bi-person-fill"></i></label>
+        <input
+          class="form-control"
+          placeholder="Enter Name"
+          id="name"
+          [(ngModel)]="member.name"
+          name="name"
+          required
+        />
+      </div>
+
+      <div class="row mb-3">
+        <label for="address" class="form-label">Enter Address <i class="bi bi-geo-alt"></i></label>
+        <input
+          class="form-control"
+          placeholder="Enter Address"
+          id="address"
+          [(ngModel)]="member.address"
+          name="address"
+          required
+        />
+      </div>
+
+      <div class="row mb-3">
+        <label for="email" class="form-label">Enter Email <i class="bi bi-envelope-fill"></i></label>
+        <input
+          class="form-control"
+          type="email"
+          placeholder="Enter Email"
+          id="email"
+          [(ngModel)]="member.email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="text-center">
+        <button class="Add" type="submit">
+          <i class="bi bi-file-plus"></i> Add Member
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Image Section -->
+ 
+  <div class="image-section" data-aos="fade-up">
+    <img src="/assets/library-la-trobe-study-students-159775.jpeg" alt="Library Illustration" width="100%" height="700px" />
+  </div>
+</div>

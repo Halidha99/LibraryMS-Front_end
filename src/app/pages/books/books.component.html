@@ -1,0 +1,118 @@
+<h2 class="manage-book">
+  <i class="bi bi-book"></i> <u> Manage Books</u>
+</h2>
+
+<div class="manage-books-container" style="display: flex; flex-direction: row; flex: 1; padding: 10px;">
+
+
+  <div class="form-section col-6">
+    <div class="row mb-3">
+      <label>Enter Book Name <i class="bi bi-book icon-medium label-icon"></i></label>
+      <input placeholder="Enter Book Name" id="bookName" [(ngModel)]="book.bookName" />
+    </div>
+
+    <div class="row mb-3">
+      <label>Enter Author Name <i class="bi bi-person icon-medium label-icon"></i></label>
+      <input placeholder="Enter Author Name" id="authorName" [(ngModel)]="book.authorName" />
+    </div>
+
+    <div class="row mb-3">
+      <label>Enter Book Category <i class="bi bi-tag icon-medium label-icon"></i></label>
+      <input placeholder="Category" id="category" [(ngModel)]="book.category" />
+    </div>
+
+    <div class="row mb-3">
+      <label>Enter Quantity <i class="bi bi-basket icon-medium label-icon"></i></label>
+      <input
+        placeholder="Quantity"
+        id="qty"
+        type="number"
+        [(ngModel)]="book.qty"
+        min="1"
+        (ngModelChange)="validateQuantity()"
+      />
+      <div *ngIf="book.qty < 1" style="color:red;">
+        Quantity must be at least 1.
+      </div>
+    </div>
+
+
+    <div style="width: 100%; display: flex; justify-content: center;">
+      <button class="Add" style="width: 60%;" (click)="addBook()">
+        <i class="bi bi-file-plus"></i> Add Book
+      </button>
+  <!-- <h1>{{book.bookName}}</h1> -->
+    </div>
+  </div>
+   <!-- ----------------------------------Table Part-------------------------- -->
+  <div class="table-section col-6">
+    <h3 class="book-list-header"><b><u>Book List</u></b></h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Count</th>
+          <th>Book ID</th>
+          <th>Book Name</th>
+          <th>Author</th>
+          <th>Quantity</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of bookList; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{book.id}}</td>
+          <td>{{ book.bookName }}</td>
+          <td>{{ book.authorName }}</td>
+          <td>{{ book.qty }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteBookById(book.id)">
+              <i class="bi bi-trash-fill"></i> Delete
+            </button>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateBook(book)">
+              <i class="bi bi-pencil-square"></i> Edit
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="exampleModalLabel">Update Book</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="book-id" class="form-label">ID</label>
+          <input type="text" class="form-control" [(ngModel)]="bookTemp.id" id="book-id" disabled>
+        </div>
+        <div class="mb-3">
+          <label for="book-name" class="form-label">Name</label>
+          <input type="text" class="form-control" [(ngModel)]="bookTemp.bookName" id="book-name" placeholder="Enter Book Name">
+        </div>
+        <div class="mb-3">
+          <label for="book-author" class="form-label">Author</label>
+          <input type="text" class="form-control" [(ngModel)]="bookTemp.authorName" id="book-author" placeholder="Enter Author Name">
+        </div>
+        <div class="mb-3">
+          <label for="book-category" class="form-label">Category</label>
+          <input type="text" class="form-control" [(ngModel)]="bookTemp.category" id="book-category" placeholder="Enter Book Category">
+        </div>
+        <div class="mb-3">
+          <label for="book-qty" class="form-label">Quantity</label>
+          <input type="number" class="form-control" [(ngModel)]="bookTemp.qty" id="book-qty" placeholder="Enter Quantity">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveBook()" data-bs-dismiss="modal">Update Book</button>
+      </div>
+    </div>
+  </div>
+</div>
