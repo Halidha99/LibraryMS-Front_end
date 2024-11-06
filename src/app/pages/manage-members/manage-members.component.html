@@ -1,1 +1,69 @@
-<p>manage-members works!</p>
+<div class="table-section col-12">
+  <h3 class="book-list-header"><b><u> <i class="bi bi-people fs-2">Member List</i></u></b></h3>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Count</th>
+        <th>Member ID</th>
+        <th>Member Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let member of memberList; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{member.id}}</td>
+        <td>{{ member.name }}</td>
+        <td>{{ member.address }}</td>
+        <td>{{ member.email}}</td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteMemberById(member.id)">
+            <i class="bi bi-trash-fill"></i> Delete
+          </button>
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateMember(member)">
+            <i class="bi bi-pencil-square"></i> Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="exampleModalLabel">Update Member</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="member-id" class="form-label">ID</label>
+          <input type="text" class="form-control" [(ngModel)]="memberTemp.id" id="member-id" disabled>
+        </div>
+        <div class="mb-3">
+          <label for="member-name" class="form-label">Name</label>
+          <input type="text" class="form-control" [(ngModel)]="memberTemp.name" id="member-name" placeholder="Enter member Name">
+        </div>
+        <div class="mb-3">
+          <label for="member-Address" class="form-label">Address</label>
+          <input type="text" class="form-control" [(ngModel)]="memberTemp.address" id="member-Address" placeholder="Enter Address ">
+        </div>
+        <div class="mb-3">
+          <label for="member-email" class="form-label">Email</label>
+          <input type="text" class="form-control" [(ngModel)]="memberTemp.email" id="member-email" placeholder="Enter Email">
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveMember()" data-bs-dismiss="modal">Update Member</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

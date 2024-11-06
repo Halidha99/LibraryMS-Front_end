@@ -1,0 +1,29 @@
+<div class="table-section col-12">
+  <h3 class="book-list-header"><b><u> <i class="bi bi-people fs-2">Member List</i></u></b></h3>
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Count</th>
+        <th>Member ID</th>
+        <th>Member Name</th>
+        <th>Address</th>
+        <th>Email</th>
+
+      </tr>
+    </thead>
+    <tbody class="tbody">
+      <tr *ngFor="let member of memberList; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{member.id}}</td>
+        <td>{{ member.name }}</td>
+        <td>{{ member.address }}</td>
+        <td>{{ member.email}}</td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+

@@ -17,25 +17,33 @@ export class AddMembersComponent {
     email: ''
   };
 
+  public errorMessage: string = ''; 
+
   constructor(private http: HttpClient) {}
 
   public addMember() {
-    if (!this.member.name || !this.member.address || !this.member.email) {
-      alert('Please fill in all fields.');
+    this.errorMessage = '';
+
+    if (!this.member.email || !this.member.email.includes('@')) {
+      this.errorMessage = 'Please enter a valid email address.';
       return;
     }
 
-    this.http.post('http://localhost:8080/member/add-member', this.member).subscribe({
-      next: () => {
-        alert('Member Added!');
+    if (!this.member.address || this.member.address.length < 5) {
+      this.errorMessage = 'Please enter a valid address (at least 5 characters).';
+      return;
+    }
+
+
+    this.http.post("http://localhost:8080/member/add-member", this.member)
+      .subscribe(() => {
+        alert("Member Added Successfully!");
         this.resetForm();
-      },
-      error: (error) => {
-        console.error('Error adding member:', error);
-        alert('Failed to add member. Please try again.');
-      }
-    });
+      }, (error) => {
+        this.errorMessage = 'An error occurred while adding the member. Please try again.';
+      });
   }
+
 
   private resetForm() {
     this.member = {

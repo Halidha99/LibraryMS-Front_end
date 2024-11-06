@@ -1,0 +1,66 @@
+.table-section {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  padding: 20px;
+  margin: 10px 0;
+}
+
+
+.book-list-header {
+  color: #2d0bef;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+.tbody{
+  background-color: #0077B6;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.styled-table th {
+  background-color: #023E8A;
+  color: white;
+  font-weight: bold;
+}
+
+.styled-table tr:hover {
+  background-color: #1877d5;
+}
+
+.styled-table td {
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.styled-table td:last-child {
+  display: flex;
+  justify-content: space-around;
+}
+
+
+@media (max-width: 768px) {
+  .styled-table {
+    font-size: 14px;
+  }
+
+  .styled-table th,
+  .styled-table td {
+    padding: 8px;
+  }
+
+  .book-list-header {
+    font-size: 20px;
+  }
+}

@@ -4,12 +4,14 @@ import { SideNavComponent } from './side-nav/side-nav.component';
 import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { AddMembersComponent } from './pages/add-members/add-members.component';
+import { ManageMembersComponent } from './pages/manage-members/manage-members.component';
 
 export const routes: Routes = [
 
   { path: 'dashboard', component:MainComponent },
   { path: 'books', component: BooksComponent },
   { path: 'add-members', component: AddMembersComponent},
+  {path:'manage-members',component:ManageMembersComponent},
   // { path: 'issue-books', component: IssueBooksComponent },
   // { path: 'return-books', component: ReturnBooksComponent },
   // { path: 'view-records', component: ViewRecordsComponent },
