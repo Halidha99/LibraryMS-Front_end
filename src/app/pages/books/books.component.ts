@@ -19,7 +19,9 @@ export class BooksComponent {
     qty: 1
   };
 
-  public bookList:any=[];
+  public bookList: any[] = [];
+  public filteredBookList: any[] = [];
+  public searchTerm: string = ''; 
 
   constructor(private http: HttpClient) {
     this.loadTable();
@@ -33,8 +35,8 @@ export class BooksComponent {
     }
   }
 
-  public addBook() {
 
+  public addBook() {
     if (this.book.qty < 1) {
       alert("Quantity must be at least 1.");
       return;
@@ -43,34 +45,51 @@ export class BooksComponent {
     this.http.post("http://localhost:8080/book/add-book", this.book)
       .subscribe(() => {
         alert("Book Added Successfully!");
+        this.loadTable();
       });
   }
 
-  loadTable(){
-    this.http.get("http://localhost:8080/book/get-book").subscribe((data=>{
-      // console.log(data);
-      this.bookList=data;
-    }))
+
+  loadTable() {
+    this.http.get("http://localhost:8080/book/get-book").subscribe((data: any) => {
+      this.bookList = data;
+      this.filteredBookList = data;
+    });
   }
-  deleteBookById(id:any){
-    console.log(id);
-    this.http.delete(`http://localhost:8080/book/delete-by-id/${id}`).subscribe(data=>{
-      alert("Book deleted !!!!");
+
+
+  deleteBookById(id: any) {
+    this.http.delete(`http://localhost:8080/book/delete-by-id/${id}`).subscribe(data => {
+      alert("Book deleted!");
       this.loadTable();
-    })
-  }
-    public bookTemp:any={}
-  updateBook(book:any){
-    console.log(book);
-    this.bookTemp=book;
-
-  }
-  saveBook(){
-    this.http.put("http://localhost:8080/customer/update-book",this.bookTemp).subscribe(data=>{
-      alert("Book Updated!!!!!")
-    })
+    });
   }
 
+
+  public bookTemp: any = {};
+
+  updateBook(book: any) {
+    this.bookTemp = { ...book };
+  }
+
+
+  saveBook() {
+    this.http.put("http://localhost:8080/book/update-book", this.bookTemp).subscribe(data => {
+      alert("Book Updated!");
+      this.loadTable();
+    });
+  }
+
+
+  searchBooks() {
+    if (this.searchTerm) {
+
+      this.filteredBookList = this.bookList.filter(book =>
+        book.bookName.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+
+      this.filteredBookList = this.bookList;
+    }
+  }
 }
-
-

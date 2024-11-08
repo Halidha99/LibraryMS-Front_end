@@ -8,36 +8,50 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './manage-members.component.html',
-  styleUrl: './manage-members.component.css'
+  styleUrls: ['./manage-members.component.css']
 })
 export class ManageMembersComponent {
-  public memberList:any=[];
+  public memberList: any = [];
+  public filteredmemberList: any = [];
+  public searchTerm: string = '';
+  public memberTemp: any = {};
 
-  constructor(private http:HttpClient){
+  constructor(private http: HttpClient) {
     this.loadTable();
   }
-  loadTable(){
-    this.http.get("http://localhost:8080/member/get-member").subscribe((data=>{
-      this.memberList=data;
-    }))
+
+  loadTable() {
+    this.http.get("http://localhost:8080/member/get-member").subscribe((data: any) => {
+      this.memberList = data;
+      this.filteredmemberList = data;
+    });
   }
-  deleteMemberById(id:any){
-    console.log(id);
-    this.http.delete(`http://localhost:8080/member/delete-by-id/${id}`).subscribe(data=>{
-      alert("Member deleted !!!!");
+
+  deleteMemberById(id: any) {
+    this.http.delete(`http://localhost:8080/member/delete-by-id/${id}`).subscribe(() => {
+      alert("Member deleted!");
       this.loadTable();
-    })
-  }
-    public memberTemp:any={}
-  updateMember(member:any){
-    console.log(member);
-    this.memberTemp=member;
-
-  }
-  saveMember(){
-    this.http.put("http://localhost:8080/member/update-member",this.memberTemp).subscribe(data=>{
-      alert("Member  Updated!!!!!")
-    })
+    });
   }
 
+  updateMember(member: any) {
+    this.memberTemp = { ...member };
+  }
+
+  saveMember() {
+    this.http.put("http://localhost:8080/member/update-member", this.memberTemp).subscribe(() => {
+      alert("Member updated!");
+      this.loadTable();
+    });
+  }
+
+  searchMembers() {
+    if (this.searchTerm) {
+      this.filteredmemberList = this.memberList.filter((member: { name: string; }) =>
+        member.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredmemberList = this.memberList;
+    }
+  }
 }

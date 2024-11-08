@@ -1,5 +1,19 @@
 <div class="table-section col-12">
-  <h3 class="book-list-header"><b><u> <i class="bi bi-people fs-2">Member List</i></u></b></h3>
+  <h3 class="book-list-header"><b><u> <i class="bi bi-people fs-2"> Member List</i></u></b></h3>
+
+  <div class="search-container">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Enter member name to search"
+      [(ngModel)]="searchTerm"
+      aria-label="Search"
+      style="width: 900px; margin-right: 10px;"
+    />
+    <button class="btn btn-primary" (click)="searchMembers()">Search</button>
+  </div>
+
+  <br>
   <table class="styled-table">
     <thead>
       <tr>
@@ -12,14 +26,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let member of memberList; index as i">
+      <tr *ngFor="let member of filteredmemberList; index as i">
         <td>{{ i + 1 }}</td>
-        <td>{{member.id}}</td>
+        <td>{{ member.memberId }}</td>
         <td>{{ member.name }}</td>
         <td>{{ member.address }}</td>
-        <td>{{ member.email}}</td>
+        <td>{{ member.email }}</td>
         <td>
-          <button class="btn btn-danger" (click)="deleteMemberById(member.id)">
+          <button class="btn btn-danger" (click)="deleteMemberById(member.memberId)">
             <i class="bi bi-trash-fill"></i> Delete
           </button>
           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateMember(member)">
@@ -41,21 +55,20 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="member-id" class="form-label">ID</label>
-          <input type="text" class="form-control" [(ngModel)]="memberTemp.id" id="member-id" disabled>
+          <input type="text" class="form-control" [(ngModel)]="memberTemp.memberId" id="member-id" disabled>
         </div>
         <div class="mb-3">
           <label for="member-name" class="form-label">Name</label>
           <input type="text" class="form-control" [(ngModel)]="memberTemp.name" id="member-name" placeholder="Enter member Name">
         </div>
         <div class="mb-3">
-          <label for="member-Address" class="form-label">Address</label>
-          <input type="text" class="form-control" [(ngModel)]="memberTemp.address" id="member-Address" placeholder="Enter Address ">
+          <label for="member-address" class="form-label">Address</label>
+          <input type="text" class="form-control" [(ngModel)]="memberTemp.address" id="member-address" placeholder="Enter Address">
         </div>
         <div class="mb-3">
           <label for="member-email" class="form-label">Email</label>
           <input type="text" class="form-control" [(ngModel)]="memberTemp.email" id="member-email" placeholder="Enter Email">
         </div>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -64,6 +77,3 @@
     </div>
   </div>
 </div>
-
-
-
