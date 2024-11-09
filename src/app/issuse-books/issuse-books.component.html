@@ -4,33 +4,44 @@
 
 <div class="issue-books-container">
   <div class="form-section mb-3">
-    <!-- Book ID Selection -->
-    <label for="book-id" class="mr-2">Book Id:</label>
+    <label for="book-id" class="mr-2">Book Id: </label>
     <div class="input-group mb-2" style="width: 100%;">
-      <select id="book-id" [(ngModel)]="issuseBook.id" class="form-control" style="width: 100%;">
-        <option *ngFor="let book of bookList" [value]="book.id">{{ book.id }}</option>
+      <select class="form-control" [(ngModel)]="issuseBook.id" name="bookId" style="width: 100%;" required>
+        <option *ngFor="let book of bookList" [value]="book.id">
+          {{ book.id }}
+        </option>
       </select>
     </div>
 
-    <!-- Member ID Selection -->
-    <label for="member-id" class="mr-2">Member Id:</label>
+    <label for="member-id" class="mr-2">Member Id: </label>
     <div class="input-group mb-2" style="width: 100%;">
-      <select id="member-id" [(ngModel)]="issuseBook.memberId" class="form-control" style="width: 100%;">
-        <option *ngFor="let member of memberList" [value]="member.memberId">{{ member.memberId }}</option>
+      <select class="form-control" [(ngModel)]="issuseBook.memberId" name="memberId" style="width: 100%;" required>
+        <option *ngFor="let member of memberList" [value]="member.memberId">
+          {{ member.memberId }}
+        </option>
       </select>
     </div>
 
-    <!-- Issue and Due Dates -->
     <label for="issue-date" style="color: rgb(24, 97, 224);">Issue Date:
-      <input type="date" id="issue-date" [(ngModel)]="issuseBook.issueDate" style="width: 58%; max-width: 600px;">
-    </label>
-    <label for="due-date" style="color: rgb(24, 97, 224);">Due Date:
-      <input type="date" id="due-date" [(ngModel)]="issuseBook.dueDate" style="width: 60%; max-width: 400px;">
+      <input type="date" id="issue-date" [(ngModel)]="issuseBook.issueDate" style="width: 58%; max-width: 600px;" required>
     </label>
 
-    <!-- Submit Button -->
+    <label for="due-date" style="color: rgb(24, 97, 224);">Due Date:
+      <input type="date" id="due-date" [(ngModel)]="issuseBook.dueDate" style="width: 60%; max-width: 400px;" required>
+    </label>
+
+    <!-- Show loading spinner when data is loading -->
+    <div *ngIf="isLoadingBooks || isLoadingMembers">
+      <p>Loading...</p>
+    </div>
+
+    <!-- Show error message if there's an issue -->
+    <div *ngIf="errorMessage" style="color: red;">
+      <p>{{ errorMessage }}</p>
+    </div>
+
     <div style="display: flex; justify-content: center; margin-top: 15px;">
-      <button type="button" class="btn" style="background-color: #ffc107; border-color: #ffc107; color: black; font-weight: bold; padding: 10px 20px;" (click)="issueBook()">
+      <button type="button" class="btn" style="background-color: #ffc107; border-color: #ffc107; color: black; font-weight: bold; padding: 10px 20px;" (click)="Add()">
         Issue Book
       </button>
     </div>

@@ -65,26 +65,41 @@ export class IssuseBooksComponent implements OnInit {
     }, 'isLoadingMembers');
   }
 
-  // Issue Book
-  issueBook(): void {
+  public Add(): void {
     if (!this.issuseBook.id || !this.issuseBook.memberId || !this.issuseBook.issueDate || !this.issuseBook.dueDate) {
       this.errorMessage = 'Please fill out all fields.';
       return;
     }
 
-     console.log("Issuing Book:", this.issuseBook);
 
-    this.http.post("http://localhost:8080/borrow/add-borrow", this.issueBook).subscribe((data=>{
-      alert("Add Successfully");
-    }))
+    const bookData = { id: this.issuseBook.id };
+    const memberData = { memberId: this.issuseBook.memberId };
 
-    }
+    const borrowData = {
+      book: bookData,
+      member: memberData,
+      issueDate: this.issuseBook.issueDate,
+      dueDate: this.issuseBook.dueDate
+    };
+
+    console.log("Issuing Book:", borrowData);
+
+    this.http.post('http://localhost:8080/borrow/add-borrow', borrowData).subscribe(
+      (data) => {
+        alert("Book issued successfully");
+        this.resetForm(); 
+      },
+      // (error) => {
+      //   this.errorMessage = 'Error issuing the book. Please try again.';
+      //   console.error('Error issuing book:', error);
+      // }
+    );
+  }
 
 
+  // Reset form fields
   resetForm(): void {
     this.issuseBook = { id: '', memberId: '', issueDate: '', dueDate: '' };
     this.errorMessage = '';
   }
-
-
 }
