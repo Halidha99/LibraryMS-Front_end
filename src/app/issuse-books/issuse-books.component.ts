@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BooksComponent } from '../pages/books/books.component';
@@ -13,93 +13,123 @@ import { MemberDetailsComponent } from '../member-details/member-details.compone
   styleUrl: './issuse-books.component.css'
 })
 export class IssuseBooksComponent implements OnInit {
-
-  public issuseBook: any = {
-    id: '',
-    memberId: '',
-    issueDate: '',
-    dueDate: ''
-  };
-
+  public issuseBook = {
+     id: '',
+      memberId: '',
+      issueDate: '',
+      returnDate: '' };
   public bookList: any[] = [];
   public memberList: any[] = [];
+  public bookIssues: any[] = [];
 
-  public isLoadingBooks: boolean = false;
-  public isLoadingMembers: boolean = false;
-  public errorMessage: string = '';
+  public issuseTemp: any = {};
+
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadBooks();
     this.loadMembers();
+    this.loadIssuedBooks();
   }
 
-  // Load Data for Books and Members
-  loadData(url: string, callback: (data: any[]) => void, loadingState: 'isLoadingBooks' | 'isLoadingMembers'): void {
-    this[loadingState] = true;
-    this.http.get<any[]>(url).subscribe(
-      (data) => {
-        callback(data);
-        this[loadingState] = false;
-      },
-      (error) => {
-        this[loadingState] = false;
-        this.errorMessage = `Error loading data from ${url}. Please try again later.`;
-        console.error('Error loading data:', error);
-      }
-    );
-  }
 
-  // Load Books
   loadBooks(): void {
-    this.loadData('http://localhost:8080/book/get-book', (data) => {
+    this.http.get(`http://localhost:8080/book/get-book`).subscribe((data: any) =>{
       this.bookList = data;
-    }, 'isLoadingBooks');
+    }
+);
+
+
+}
+
+  loadMembers(): void {
+    this.http.get(`http://localhost:8080/member/get-member`).subscribe((data:any)=>{
+   this.memberList=data;
+    });
+    // this.loadData(`http://localhost:8080/member/get-member`, (data) => {
+    //   this.memberList = data;
+    // }, 'isLoadingMembers');
   }
 
-  // Load Members
-  loadMembers(): void {
-    this.loadData('http://localhost:8080/member/get-member', (data) => {
-      this.memberList = data;
-    }, 'isLoadingMembers');
+  loadIssuedBooks(): void {
+    this.http.get<any[]>(`http://localhost:8080/borrow/get-borrow`).subscribe(
+      (data) => {
+        this.bookIssues = data;
+        this.resetForm();
+      },
+
+    );
   }
 
   public Add(): void {
-    if (!this.issuseBook.id || !this.issuseBook.memberId || !this.issuseBook.issueDate || !this.issuseBook.dueDate) {
-      this.errorMessage = 'Please fill out all fields.';
+    if (!this.issuseBook.id || !this.issuseBook.memberId || !this.issuseBook.issueDate || !this.issuseBook.returnDate) {
+      alert("Please fill out all fields");
       return;
     }
 
-
-    const bookData = { id: this.issuseBook.id };
-    const memberData = { memberId: this.issuseBook.memberId };
-
     const borrowData = {
-      book: bookData,
-      member: memberData,
+      book: { id: this.issuseBook.id },
+      member: { memberId: this.issuseBook.memberId },
       issueDate: this.issuseBook.issueDate,
-      dueDate: this.issuseBook.dueDate
+      returnDate: this.issuseBook.returnDate
     };
 
-    console.log("Issuing Book:", borrowData);
-
-    this.http.post('http://localhost:8080/borrow/add-borrow', borrowData).subscribe(
-      (data) => {
+    this.http.post(`http://localhost:8080/borrow/add-borrow`, borrowData).subscribe(
+      (response) => {
         alert("Book issued successfully");
-        this.resetForm(); 
+        this.updateBookQuantity(this.issuseBook.id, -1);
+        this.loadIssuedBooks();
+        this.resetForm();
       },
-      // (error) => {
-      //   this.errorMessage = 'Error issuing the book. Please try again.';
-      //   console.error('Error issuing book:', error);
-      // }
+
+
     );
   }
 
 
-  // Reset form fields
-  resetForm(): void {
-    this.issuseBook = { id: '', memberId: '', issueDate: '', dueDate: '' };
-    this.errorMessage = '';
+  public deleteBorrow(id: string): void {
+    this.http.delete(`http://localhost:8080/borrow/delete-by-id/${id}`).subscribe(
+      () => {
+        alert("Issue Borrow record deleted successfully!");
+
+
+        this.bookIssues = this.bookIssues.filter(issue => issue.id !== id);
+      },
+
+
+    );
   }
+
+  updateBorrow(issue: any): void {
+    this.issuseTemp = { ...issue };
+  }
+
+  saveBorrow(): void {
+    this.http.put(`http://localhost:8080/borrow/update-borrow`, this.issuseTemp).subscribe(
+      () => {
+       alert("Borrow record updated successfully!");
+        this.loadIssuedBooks();
+      },
+
+    );
+  }
+
+  private updateBookQuantity(bookId: string, adjustment: number): void {
+    const book = this.bookList.find(b => b.id === bookId);
+    if (book) {
+      book.qty = (book.qty || 0) + adjustment;
+      if (book.qty === 0) {
+        alert("Out of Stock");
+      }
+    }
+  }
+
+public resetForm(){
+    this.issuseBook = { id: '', memberId: '', issueDate: '', returnDate: '' };
+
+
+  }
+
+
 }

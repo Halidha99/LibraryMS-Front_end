@@ -2,48 +2,119 @@
   <u><i class="bi bi-journals">Issue Books</i></u>
 </h1>
 
-<div class="issue-books-container">
-  <div class="form-section mb-3">
-    <label for="book-id" class="mr-2">Book Id: </label>
-    <div class="input-group mb-2" style="width: 100%;">
-      <select class="form-control" [(ngModel)]="issuseBook.id" name="bookId" style="width: 100%;" required>
-        <option *ngFor="let book of bookList" [value]="book.id">
-          {{ book.id }}
-        </option>
-      </select>
+<div class="manage-books-container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="form-section">
+
+        <h3>Issue a Book</h3>
+
+        <div class="mb-3">
+          <label for="book-id">Book ID:</label>
+          <div class="input-group mb-2">
+            <select class="form-control" [(ngModel)]="issuseBook.id" name="bookId" required>
+              <option value="" disabled>Select a book</option>
+              <option *ngFor="let book of bookList" [value]="book.id">
+                {{ book.id }}
+              </option>
+            </select>
+
+          </div>
+
+          <label for="member-id">Member ID:</label>
+          <div class="input-group mb-2">
+            <select class="form-control" [(ngModel)]="issuseBook.memberId" name="memberId" required>
+              <option value="" disabled>Select a member</option>
+              <option *ngFor="let member of memberList" [value]="member.memberId">
+                {{ member.memberId }}
+              </option>
+            </select>
+
+
+          <label for="issue-date">Issue Date:</label>
+          <input type="date" id="issue-date" [(ngModel)]="issuseBook.issueDate" required class="form-control">
+
+          <label for="due-date">Due Date:</label>
+          <input type="date" id="due-date" [(ngModel)]="issuseBook.returnDate" required class="form-control">
+
+          </div>
+
+          <button type="button" class="btn btn-primary" (click)="Add()">Issue Book</button>
+        </div>
+      </div>
     </div>
 
-    <label for="member-id" class="mr-2">Member Id: </label>
-    <div class="input-group mb-2" style="width: 100%;">
-      <select class="form-control" [(ngModel)]="issuseBook.memberId" name="memberId" style="width: 100%;" required>
-        <option *ngFor="let member of memberList" [value]="member.memberId">
-          {{ member.memberId }}
-        </option>
-      </select>
+
+    <div class="col-12 col-md-6">
+      <div class="table-section" style="width: 180%;" >
+
+        <h3 class="book-list-header">Issued Books</h3>
+
+        <table class="table table-striped">
+          <thead >
+            <tr>
+              <th>Count</th>
+              <th>Borrow ID</th>
+              <th>Book ID</th>
+              <th>Member ID</th>
+              <th>Issue Date</th>
+              <th>Return Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let issue of bookIssues;index as i">
+              <td>{{i+1}}</td>
+              <td>{{issue.borrowId}}</td>
+              <td>{{ issue.book.id }}</td>
+              <td>{{ issue.member.memberId }}</td>
+              <td>{{ issue.issueDate | date }}</td>
+              <td>{{ issue.returnDate | date }}</td>
+              <td>
+                <button class="btn btn-danger" (click)="deleteBorrow(issue.borrowId)">
+                  <i class="bi bi-trash-fill"></i> Delete
+                </button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateBorrow(issue)">
+                  <i class="bi bi-pencil-square"></i> Edit
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
-    <label for="issue-date" style="color: rgb(24, 97, 224);">Issue Date:
-      <input type="date" id="issue-date" [(ngModel)]="issuseBook.issueDate" style="width: 58%; max-width: 600px;" required>
-    </label>
+  </div>
+</div>
 
-    <label for="due-date" style="color: rgb(24, 97, 224);">Due Date:
-      <input type="date" id="due-date" [(ngModel)]="issuseBook.dueDate" style="width: 60%; max-width: 400px;" required>
-    </label>
+<!-- Modal for Editing Book Issue Information -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="exampleModalLabel">Update Borrow</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="issuek-id" class="form-label">Issue ID</label>
+          <input type="text" class="form-control" [(ngModel)]="issuseTemp.borrowId" id="Issue-id" disabled>
+        </div>
 
-    <!-- Show loading spinner when data is loading -->
-    <div *ngIf="isLoadingBooks || isLoadingMembers">
-      <p>Loading...</p>
-    </div>
+        <div class="mb-3">
+          <label for="issue-issuseDate" class="form-label">Issue Date</label>
+          <input type="date" class="form-control" [(ngModel)]="issuseTemp.issueDate" id="issue-issuseDate" required>
+        </div>
+        <div class="mb-3">
+          <label for="issue-duedate" class="form-label">Due Date</label>
+          <input type="date" class="form-control" [(ngModel)]="issuseTemp.returnDate" id="issue-returnDate" required>
+        </div>
+      </div>
 
-    <!-- Show error message if there's an issue -->
-    <div *ngIf="errorMessage" style="color: red;">
-      <p>{{ errorMessage }}</p>
-    </div>
-
-    <div style="display: flex; justify-content: center; margin-top: 15px;">
-      <button type="button" class="btn" style="background-color: #ffc107; border-color: #ffc107; color: black; font-weight: bold; padding: 10px 20px;" (click)="Add()">
-        Issue Book
-      </button>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveBorrow()" data-bs-dismiss="modal">Update Issue</button>
+      </div>
     </div>
   </div>
 </div>

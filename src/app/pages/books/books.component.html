@@ -50,7 +50,7 @@
     <h3 class="book-list-header"><b><u>Book List</u></b></h3>
 
 
-     
+
       <div class="search-container" >
         <input
           type="text"
@@ -85,7 +85,10 @@
             <td>{{ book.bookName }}</td>
             <td>{{ book.authorName }}</td>
             <td>{{book.category}}</td>
-            <td>{{ book.qty }}</td>
+            <td>
+              <span *ngIf="book.qty > 0">{{ book.qty }}</span>
+              <span *ngIf="book.qty === 0" style="color: red; font: 1em sans-serif;"><b>Out of Stock</b></span>
+            </td>
             <td>
               <button class="btn btn-danger" (click)="deleteBookById(book.id)">
                 <i class="bi bi-trash-fill"></i> Delete

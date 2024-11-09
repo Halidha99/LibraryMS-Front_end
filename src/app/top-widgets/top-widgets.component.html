@@ -28,8 +28,8 @@
     <div class="icon">
       <i class="bi bi-people"></i>
     </div>
-    <div class="value">
-      <div class="top">321</div>
+    <div class="value" >
+      <div class="top"  *ngFor="let member of filteredmemberList; index as i">{{i+1}}</div>
       <div class="bottom">No.Of.Memmbers</div>
     </div>
   </div>

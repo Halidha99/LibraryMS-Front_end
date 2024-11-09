@@ -101,4 +101,56 @@ export class BooksComponent {
       this.filteredBookList = this.bookList;
     }
   }
+
+  public returnBook(bookId: any): void {
+    this.http.post(`http://localhost:8080/borrow/return-book/${bookId}`, {}).subscribe(
+      (data) => {
+        alert("Book returned successfully!");
+
+     
+        this.bookList = this.bookList.map(book =>
+          book.id === bookId ? { ...book, qty: book.qty + 1 } : book
+        );
+
+        this.filteredBookList = this.bookList;
+      },
+      (error) => {
+        alert("Error returning the book");
+        console.error('Error returning book:', error);
+      }
+    );
+  }
+
+  public issueBook(bookId: any): void {
+    const book = this.bookList.find(book => book.id === bookId);
+
+    if (book && book.qty > 0) {
+      this.http.post(`http://localhost:8080/borrow/issue-book/${bookId}`, {}).subscribe(
+        (data) => {
+          alert("Book issued successfully!");
+
+
+          this.bookList = this.bookList.map(book =>
+            book.id === bookId ? { ...book, qty: book.qty - 1 } : book
+          );
+
+          if (book.qty - 1 === 0) {
+            alert("This book is now out of stock.");
+          }
+
+
+          this.filteredBookList = this.bookList;
+        },
+        (error) => {
+          alert("Error issuing the book");
+          console.error('Error issuing book:', error);
+        }
+      );
+    } else {
+      alert("Book is out of stock and cannot be issued.");
+    }
+  }
+
+
+
 }

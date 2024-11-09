@@ -8,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrl: './top-widgets.component.css'
 })
 export class TopWidgetsComponent {
+  
 
 }
