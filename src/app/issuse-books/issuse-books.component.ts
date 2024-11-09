@@ -62,9 +62,16 @@ export class IssuseBooksComponent implements OnInit {
     );
   }
 
-  public Add(): void {
+  public addBorrow(): void {
     if (!this.issuseBook.id || !this.issuseBook.memberId || !this.issuseBook.issueDate || !this.issuseBook.returnDate) {
       alert("Please fill out all fields");
+      return;
+    }
+
+    // Find the selected book to check its quantity
+    const selectedBook = this.bookList.find(book => book.id === this.issuseBook.id);
+    if (selectedBook && selectedBook.qty <= 0) {
+      alert("Out of Stock");
       return;
     }
 
@@ -78,14 +85,17 @@ export class IssuseBooksComponent implements OnInit {
     this.http.post(`http://localhost:8080/borrow/add-borrow`, borrowData).subscribe(
       (response) => {
         alert("Book issued successfully");
-        this.updateBookQuantity(this.issuseBook.id, -1);
+        this.updateBookQuantity(this.issuseBook.id, -1); 
         this.loadIssuedBooks();
         this.resetForm();
       },
-
-
+      (error: HttpErrorResponse) => {
+        console.error("Error issuing book:", error);
+        alert("An error occurred while issuing the book.");
+      }
     );
   }
+
 
 
   public deleteBorrow(id: string): void {

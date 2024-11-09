@@ -17,7 +17,10 @@
         <td>{{book.id}}</td>
         <td>{{ book.bookName }}</td>
         <td>{{ book.authorName }}</td>
-        <td>{{ book.qty }}</td>
+        <td>
+          <span *ngIf="book.qty > 0">{{ book.qty }}</span>
+          <span *ngIf="book.qty === 0" style="color: red; font: 1em sans-serif;"><b>Out of Stock</b></span>
+        </td>
       </tr>
     </tbody>
   </table>

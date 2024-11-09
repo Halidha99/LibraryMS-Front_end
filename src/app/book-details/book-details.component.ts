@@ -12,16 +12,23 @@ import { BooksComponent } from "../pages/books/books.component";
 })
 export class BookDetailsComponent {
 
-  public bookList:any=[];
+  public bookList: any[] = [];
 
   constructor(private http: HttpClient) {
-    this. loadBooks();
+    this.loadBooks();
   }
-   loadBooks(){
-    this.http.get("http://localhost:8080/book/get-book").subscribe((data=>{
-      // console.log(data);
-      this.bookList=data;
-    }))
+
+  loadBooks() {
+    this.http.get("http://localhost:8080/book/get-book").subscribe((data: any) => {
+      this.bookList = data;
+
+
+      this.bookList.forEach(book => {
+        if (book.qty <= 0) {
+          book.outOfStock = true; 
+        }
+      });
+    });
   }
 }
 

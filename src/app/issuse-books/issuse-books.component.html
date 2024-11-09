@@ -18,7 +18,7 @@
                 {{ book.id }}
               </option>
             </select>
-
+<!-- {{issuseBook.issueDate}} -->
           </div>
 
           <label for="member-id">Member ID:</label>
@@ -31,22 +31,25 @@
             </select>
 
 
+            <!--  Two way data Binding  -->
           <label for="issue-date">Issue Date:</label>
           <input type="date" id="issue-date" [(ngModel)]="issuseBook.issueDate" required class="form-control">
 
-          <label for="due-date">Due Date:</label>
-          <input type="date" id="due-date" [(ngModel)]="issuseBook.returnDate" required class="form-control">
+          <label for="return-date">Return Due Date:</label>
+          <input type="date" id="return -date" [(ngModel)]="issuseBook.returnDate" required class="form-control">
 
           </div>
 
-          <button type="button" class="btn btn-primary" (click)="Add()">Issue Book</button>
+          <button type="button" class="btn btn-primary" (click)="addBorrow()">Issue Book</button>
         </div>
       </div>
     </div>
-
-
+<!-- {{issuseBook.id}}
+{{issuseBook.memberId}}
+{{issuseBook.issueDate}}
+{{issuseBook.returnDate}} -->
     <div class="col-12 col-md-6">
-      <div class="table-section" style="width: 180%;" >
+      <div class="table-section" style="width: 140%;" >
 
         <h3 class="book-list-header">Issued Books</h3>
 

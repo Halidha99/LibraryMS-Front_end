@@ -14,11 +14,13 @@ import Aos from 'aos';
 export class MemberDetailsComponent implements OnInit {
   ngOnInit() {
     Aos.init({
-      duration: 1200,
-      easing: 'ease-in-out',
+      duration: 2000,    
+      easing: 'ease-out',
+      delay: 200,
       once: true
     });
   }
+
   public memberList:any=[];
 
   constructor(private http:HttpClient){
