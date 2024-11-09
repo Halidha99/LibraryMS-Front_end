@@ -6,6 +6,7 @@ import { MainComponent } from './main/main.component';
 import { AddMembersComponent } from './pages/add-members/add-members.component';
 import { ManageMembersComponent } from './pages/manage-members/manage-members.component';
 import { ReturnBookComponent } from './pages/return-book/return-book.component';
+import { IssuseBooksComponent } from './issuse-books/issuse-books.component';
 
 export const routes: Routes = [
 
@@ -13,7 +14,7 @@ export const routes: Routes = [
   { path: 'books', component: BooksComponent },
   { path: 'add-members', component: AddMembersComponent},
   {path:'manage-members',component:ManageMembersComponent},
-  // { path: 'issue-books', component: IssueBooksComponent },
+  { path: 'issue-books', component: IssuseBooksComponent},
   { path: 'return-books', component: ReturnBookComponent},
   // { path: 'view-records', component: ViewRecordsComponent },
   // { path: 'view-issued-books', component: ViewIssuedBooksComponent },

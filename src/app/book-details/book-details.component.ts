@@ -15,9 +15,9 @@ export class BookDetailsComponent {
   public bookList:any=[];
 
   constructor(private http: HttpClient) {
-    this.loadTable();
+    this. loadBooks();
   }
-  loadTable(){
+   loadBooks(){
     this.http.get("http://localhost:8080/book/get-book").subscribe((data=>{
       // console.log(data);
       this.bookList=data;

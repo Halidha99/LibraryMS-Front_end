@@ -22,9 +22,9 @@ export class MemberDetailsComponent implements OnInit {
   public memberList:any=[];
 
   constructor(private http:HttpClient){
-    this.loadTable();
+    this.loadMembers();
   }
-  loadTable(){
+  loadMembers(){
     this.http.get("http://localhost:8080/member/get-member").subscribe((data=>{
       this.memberList=data;
     }))

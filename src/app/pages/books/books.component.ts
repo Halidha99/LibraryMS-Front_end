@@ -21,10 +21,10 @@ export class BooksComponent {
 
   public bookList: any[] = [];
   public filteredBookList: any[] = [];
-  public searchTerm: string = ''; 
+  public searchTerm: string = '';
 
   constructor(private http: HttpClient) {
-    this.loadTable();
+    this.loadBooks();
   }
 
 
@@ -45,12 +45,12 @@ export class BooksComponent {
     this.http.post("http://localhost:8080/book/add-book", this.book)
       .subscribe(() => {
         alert("Book Added Successfully!");
-        this.loadTable();
+        this.loadBooks();
       });
   }
 
 
-  loadTable() {
+  loadBooks() {
     this.http.get("http://localhost:8080/book/get-book").subscribe((data: any) => {
       this.bookList = data;
       this.filteredBookList = data;
@@ -61,8 +61,17 @@ export class BooksComponent {
   deleteBookById(id: any) {
     this.http.delete(`http://localhost:8080/book/delete-by-id/${id}`).subscribe(data => {
       alert("Book deleted!");
-      this.loadTable();
+      this.loadBooks();
     });
+  }
+  setBookId(bookId: string) {
+    const selectedBook = this.bookList.find(book => book.id === bookId);
+    if (selectedBook) {
+      this.book.id = selectedBook.id;
+      this.book.bookName = selectedBook.bookName;
+      this.book.authorName = selectedBook.authorName;
+      this.book.category = selectedBook.category;
+    }
   }
 
 
@@ -76,7 +85,7 @@ export class BooksComponent {
   saveBook() {
     this.http.put("http://localhost:8080/book/update-book", this.bookTemp).subscribe(data => {
       alert("Book Updated!");
-      this.loadTable();
+      this.loadBooks();
     });
   }
 

@@ -17,10 +17,10 @@ export class ManageMembersComponent {
   public memberTemp: any = {};
 
   constructor(private http: HttpClient) {
-    this.loadTable();
+    this.loadMembers();
   }
 
-  loadTable() {
+  loadMembers() {
     this.http.get("http://localhost:8080/member/get-member").subscribe((data: any) => {
       this.memberList = data;
       this.filteredmemberList = data;
@@ -30,7 +30,7 @@ export class ManageMembersComponent {
   deleteMemberById(id: any) {
     this.http.delete(`http://localhost:8080/member/delete-by-id/${id}`).subscribe(() => {
       alert("Member deleted!");
-      this.loadTable();
+      this.loadMembers();
     });
   }
 
@@ -41,7 +41,7 @@ export class ManageMembersComponent {
   saveMember() {
     this.http.put("http://localhost:8080/member/update-member", this.memberTemp).subscribe(() => {
       alert("Member updated!");
-      this.loadTable();
+      this.loadMembers();
     });
   }
 
