@@ -47,9 +47,7 @@ export class IssuseBooksComponent implements OnInit {
     this.http.get(`http://localhost:8080/member/get-member`).subscribe((data:any)=>{
    this.memberList=data;
     });
-    // this.loadData(`http://localhost:8080/member/get-member`, (data) => {
-    //   this.memberList = data;
-    // }, 'isLoadingMembers');
+
   }
 
   loadIssuedBooks(): void {
@@ -68,7 +66,7 @@ export class IssuseBooksComponent implements OnInit {
       return;
     }
 
-    // Find the selected book to check its quantity
+
     const selectedBook = this.bookList.find(book => book.id === this.issuseBook.id);
     if (selectedBook && selectedBook.qty <= 0) {
       alert("Out of Stock");
@@ -85,13 +83,13 @@ export class IssuseBooksComponent implements OnInit {
     this.http.post(`http://localhost:8080/borrow/add-borrow`, borrowData).subscribe(
       (response) => {
         alert("Book issued successfully");
-        this.updateBookQuantity(this.issuseBook.id, -1); 
+        this.updateBookQuantity(this.issuseBook.id, -1);
         this.loadIssuedBooks();
         this.resetForm();
       },
       (error: HttpErrorResponse) => {
         console.error("Error issuing book:", error);
-        alert("An error occurred while issuing the book.");
+        alert("All out. It's a sad day for book lovers.");
       }
     );
   }

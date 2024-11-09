@@ -13,9 +13,9 @@
   margin-bottom: 15px;
   font-size: 24px;
 }
-.tbody{
+/* .tbody{
   background-color: #0077B6;
-}
+} */
 
 .styled-table {
   width: 100%;
@@ -26,7 +26,7 @@
 .styled-table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 2px solid #dee2e6;
+  border-bottom: 2px solid #d84b35;
 }
 
 .styled-table th {
@@ -37,11 +37,12 @@
 
 .styled-table tr:hover {
   background-color: #1877d5;
+
 }
 
 .styled-table td {
   font-size: 18px;
-  color: #ffffff;
+  color: #080808;
 }
 
 .styled-table td:last-child {

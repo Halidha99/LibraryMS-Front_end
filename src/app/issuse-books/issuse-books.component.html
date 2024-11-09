@@ -6,89 +6,84 @@
   <div class="row">
     <div class="col-12 col-md-6">
       <div class="form-section">
-
-        <h3>Issue a Book</h3>
+        <h2>Issue a Book</h2>
 
         <div class="mb-3">
+          <!-- Book ID Selection -->
           <label for="book-id">Book ID:</label>
           <div class="input-group mb-2">
             <select class="form-control" [(ngModel)]="issuseBook.id" name="bookId" required>
               <option value="" disabled>Select a book</option>
-              <option *ngFor="let book of bookList" [value]="book.id">
-                {{ book.id }}
-              </option>
+              <option *ngFor="let book of bookList" [value]="book.id">{{ book.id }}</option>
             </select>
-<!-- {{issuseBook.issueDate}} -->
           </div>
 
+          <!-- Member ID Selection -->
           <label for="member-id">Member ID:</label>
           <div class="input-group mb-2">
             <select class="form-control" [(ngModel)]="issuseBook.memberId" name="memberId" required>
               <option value="" disabled>Select a member</option>
-              <option *ngFor="let member of memberList" [value]="member.memberId">
-                {{ member.memberId }}
-              </option>
+              <option *ngFor="let member of memberList" [value]="member.memberId">{{ member.memberId }}</option>
             </select>
+          </div>
 
-
-            <!--  Two way data Binding  -->
+          <!-- Issue Date -->
           <label for="issue-date">Issue Date:</label>
           <input type="date" id="issue-date" [(ngModel)]="issuseBook.issueDate" required class="form-control">
 
+          <!-- Return Date -->
           <label for="return-date">Return Due Date:</label>
-          <input type="date" id="return -date" [(ngModel)]="issuseBook.returnDate" required class="form-control">
+          <input type="date" id="return-date" [(ngModel)]="issuseBook.returnDate" required class="form-control">
 
-          </div>
-
-          <button type="button" class="btn btn-primary" (click)="addBorrow()">Issue Book</button>
+          <!-- Issue Button -->
+          <button type="button" class="Add" (click)="addBorrow()">Issue Book</button>
         </div>
       </div>
     </div>
-<!-- {{issuseBook.id}}
-{{issuseBook.memberId}}
-{{issuseBook.issueDate}}
-{{issuseBook.returnDate}} -->
+
     <div class="col-12 col-md-6">
-      <div class="table-section" style="width: 140%;" >
+      <div class="table-section">
+        <h3 class="book-list-header" style="color: black;">Issued Books</h3>
 
-        <h3 class="book-list-header">Issued Books</h3>
-
-        <table class="table table-striped">
-          <thead >
-            <tr>
-              <th>Count</th>
-              <th>Borrow ID</th>
-              <th>Book ID</th>
-              <th>Member ID</th>
-              <th>Issue Date</th>
-              <th>Return Date</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let issue of bookIssues;index as i">
-              <td>{{i+1}}</td>
-              <td>{{issue.borrowId}}</td>
-              <td>{{ issue.book.id }}</td>
-              <td>{{ issue.member.memberId }}</td>
-              <td>{{ issue.issueDate | date }}</td>
-              <td>{{ issue.returnDate | date }}</td>
-              <td>
-                <button class="btn btn-danger" (click)="deleteBorrow(issue.borrowId)">
-                  <i class="bi bi-trash-fill"></i> Delete
-                </button>
-                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateBorrow(issue)">
-                  <i class="bi bi-pencil-square"></i> Edit
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Count</th>
+                <th>Borrow ID</th>
+                <th>Book ID</th>
+                <th>Member ID</th>
+                <th>Issue Date</th>
+                <th>Return Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let issue of bookIssues; index as i">
+                <td>{{ i + 1 }}</td>
+                <td>{{ issue.borrowId }}</td>
+                <td>{{ issue.book.id }}</td>
+                <td>{{ issue.member.memberId }}</td>
+                <td>{{ issue.issueDate | date }}</td>
+                <td>{{ issue.returnDate | date }}</td>
+                <td>
+                  <button class="btn btn-danger" (click)="deleteBorrow(issue.borrowId)">
+                    <i class="bi bi-trash-fill"></i> Delete
+                  </button>
+                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateBorrow(issue)">
+                    <i class="bi bi-pencil-square"></i> Edit
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
 
+    </div>
   </div>
-</div>
+
 
 <!-- Modal for Editing Book Issue Information -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -100,7 +95,7 @@
       </div>
       <div class="modal-body">
         <div class="mb-3">
-          <label for="issuek-id" class="form-label">Issue ID</label>
+          <label for="Issue-id" class="form-label">Issue ID</label>
           <input type="text" class="form-control" [(ngModel)]="issuseTemp.borrowId" id="Issue-id" disabled>
         </div>
 
@@ -108,6 +103,7 @@
           <label for="issue-issuseDate" class="form-label">Issue Date</label>
           <input type="date" class="form-control" [(ngModel)]="issuseTemp.issueDate" id="issue-issuseDate" required>
         </div>
+
         <div class="mb-3">
           <label for="issue-duedate" class="form-label">Due Date</label>
           <input type="date" class="form-control" [(ngModel)]="issuseTemp.returnDate" id="issue-returnDate" required>
