@@ -1,32 +1,22 @@
-.table-section {
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-  padding: 20px;
-  margin: 10px 0;
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 15px;
 }
 
-
-.book-list-header {
-  color: #000000;
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 24px;
-}
-/* .tbody{
-  background-color: #0077B6;
-} */
 
 .styled-table {
   width: 100%;
   border-collapse: collapse;
 }
 
+
 .styled-table th,
 .styled-table td {
   padding: 12px;
   text-align: left;
-  border-bottom: 2px solid #d84b35;
+  border-bottom: 2px solid #dee2e6;
 }
 
 .styled-table th {
@@ -35,14 +25,15 @@
   font-weight: bold;
 }
 
-.styled-table tr:hover {
-  background-color: #1877d5;
 
+.styled-table tr:hover {
+  background-color: #ffffff;
 }
+
 
 .styled-table td {
   font-size: 18px;
-  color: #080808;
+  color: #0a0a0a;
 }
 
 .styled-table td:last-child {
@@ -50,6 +41,18 @@
   justify-content: space-around;
 }
 
+.styled-table thead {
+  position: sticky;
+  top: 0;
+  background-color: #023E8A;
+  z-index: 1;
+}
+
+
+.table-container {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
 @media (max-width: 768px) {
   .styled-table {

@@ -46,6 +46,7 @@ export class BooksComponent {
       .subscribe(() => {
         alert("Book Added Successfully!");
         this.loadBooks();
+        this.resetForm();
       });
   }
 
@@ -107,7 +108,7 @@ export class BooksComponent {
       (data) => {
         alert("Book returned successfully!");
 
-     
+
         this.bookList = this.bookList.map(book =>
           book.id === bookId ? { ...book, qty: book.qty + 1 } : book
         );
@@ -151,6 +152,14 @@ export class BooksComponent {
     }
   }
 
+  private resetForm() {
+    this.book = {
+      bookName: '',
+      authorName: '',
+      category: '',
+      qty: ''
+    };
+  }
 
 
 }

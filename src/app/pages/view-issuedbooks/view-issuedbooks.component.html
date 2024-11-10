@@ -1,0 +1,76 @@
+<h1 style="text-align: center;">
+  <u><i class="bi bi-journals">Issue Books List</i></u>
+</h1>
+
+<div >
+  <div class="table-section">
+    <div class="table-container">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Count</th>
+            <th>Borrow ID</th>
+            <th>Book ID</th>
+            <th>Member ID</th>
+            <th>Issue Date</th>
+            <th>Return Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let issue of bookIssues; index as i">
+            <td>{{ i + 1 }}</td>
+            <td>{{ issue.borrowId }}</td>
+            <td>{{ issue.book.id }}</td>
+            <td>{{ issue.member.memberId }}</td>
+            <td>{{ issue.issueDate | date }}</td>
+            <td>{{ issue.returnDate | date }}</td>
+            <td>
+              <button class="btn btn-danger " (click)="deleteBorrow(issue.borrowId)">
+                <i class="bi bi-trash-fill"></i> Delete
+              </button>
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="updateBorrow(issue)">
+                <i class="bi bi-pencil-square"></i> Edit
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal for Editing Book Issue Information -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+  <div class="modal-header bg-primary text-white">
+    <h5 class="modal-title" id="exampleModalLabel">Update Borrow</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="Issue-id" class="form-label">Issue ID</label>
+      <input type="text" class="form-control" [(ngModel)]="issuseTemp.borrowId" id="Issue-id" disabled>
+    </div>
+
+    <div class="mb-3">
+      <label for="issue-issuseDate" class="form-label">Issue Date</label>
+      <input type="date" class="form-control" [(ngModel)]="issuseTemp.issueDate" id="issue-issuseDate" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="issue-duedate" class="form-label">Due Date</label>
+      <input type="date" class="form-control" [(ngModel)]="issuseTemp.returnDate" id="issue-returnDate" required>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary" (click)="saveBorrow()" data-bs-dismiss="modal">Update Issue</button>
+  </div>
+</div>
+</div>
+</div>
+
