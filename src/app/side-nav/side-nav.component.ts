@@ -20,5 +20,11 @@ export class SideNavComponent {
   faBookOpen = faBookOpen;
   faSignOutAlt = faSignOutAlt;
 
+  // constructor(private authService: AuthService, private router: Router) {}
 
+  // onLogout(): void {
+  //   this.authService.logout();  // Calls the logout function in your AuthService
+  //   this.router.navigate(['/login']);
+
+  // }
 }
