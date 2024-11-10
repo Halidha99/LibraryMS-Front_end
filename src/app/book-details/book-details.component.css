@@ -4,6 +4,7 @@
 
   padding: 20px;
   margin: 10px 0;
+  overflow: hidden;
 }
 .table-container {
   max-height: 400px;

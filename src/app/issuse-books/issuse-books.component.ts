@@ -138,6 +138,45 @@ public resetForm(){
 
 
   }
+  validateDates(): boolean {
+    const { issueDate, returnDate } = this.issuseBook;
+
+    
+    if (!issueDate || !returnDate) {
+      alert("Please provide both issue and return dates.");
+      return false;
+    }
+
+    const issue = new Date(issueDate);
+    const returnD = new Date(returnDate);
+    const today = new Date();
+
+
+    today.setHours(0, 0, 0, 0);
+    issue.setHours(0, 0, 0, 0);
+    returnD.setHours(0, 0, 0, 0);
+
+
+    if (isNaN(issue.getTime()) || isNaN(returnD.getTime())) {
+      alert("Invalid date format. Please enter valid dates.");
+      return false;
+    }
+
+
+    if (issue > today) {
+      alert("Issue date cannot be in the future.");
+      return false;
+    }
+
+
+    if (returnD <= issue) {
+      alert("Return date must be after the issue date.");
+      return false;
+    }
+
+    return true;
+  }
+
 
 
 }

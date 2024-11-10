@@ -1,16 +1,18 @@
-
 .table-container {
   max-height: 400px;
   overflow-y: auto;
+  overflow-x: auto;
   margin-top: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  overflow: hidden;
 }
-
 
 .styled-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 700px;
 }
-
 
 .styled-table th,
 .styled-table td {
@@ -25,11 +27,9 @@
   font-weight: bold;
 }
 
-
 .styled-table tr:hover {
   background-color: #ffffff;
 }
-
 
 .styled-table td {
   font-size: 18px;
@@ -48,23 +48,12 @@
   z-index: 1;
 }
 
-
-.table-container {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
 @media (max-width: 768px) {
   .styled-table {
     font-size: 14px;
   }
-
   .styled-table th,
   .styled-table td {
     padding: 8px;
-  }
-
-  .book-list-header {
-    font-size: 20px;
   }
 }

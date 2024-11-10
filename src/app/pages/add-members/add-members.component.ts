@@ -17,23 +17,31 @@ export class AddMembersComponent {
     email: ''
   };
 
-  public errorMessage: string = ''; 
+  public errorMessage: string = '';
 
   constructor(private http: HttpClient) {}
 
   public addMember() {
     this.errorMessage = '';
+    if (!this.isValidName(this.member.name)) {
+      alert("Please enter a valid name (only alphabets and spaces allowed");
+      this.resetForm();
+      return;
+
+    }
 
     if (!this.member.email || !this.member.email.includes('@')) {
       this.errorMessage = 'Please enter a valid email address.';
+      this.resetForm();
       return;
+
     }
 
     if (!this.member.address || this.member.address.length < 5) {
       this.errorMessage = 'Please enter a valid address (at least 5 characters).';
+      this.resetForm();
       return;
     }
-
 
     this.http.post("http://localhost:8080/member/add-member", this.member)
       .subscribe(() => {
@@ -42,6 +50,20 @@ export class AddMembersComponent {
       }, (error) => {
         this.errorMessage = 'An error occurred while adding the member. Please try again.';
       });
+
+  }
+  private isValidName(name: string): boolean {
+    if (name.length < 3) {
+      return false;
+    }
+    for (let i = 0; i < name.length; i++) {
+      const char = name.charAt(i);
+
+      if (!((char >= 'A' && char <= 'Z') || (char >= 'a' && char <= 'z') || char === ' ')) {
+        return false;
+      }
+    }
+    return true;
   }
 
 

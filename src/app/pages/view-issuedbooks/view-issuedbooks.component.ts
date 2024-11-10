@@ -24,6 +24,8 @@ export class ViewIssuedbooksComponent {
  public bookIssues: any[] = [];
 
  public issuseTemp: any = {};
+ public searchStartDate: string | null = null;
+ public searchEndDate: string | null = null;
 
 
  constructor(private http: HttpClient) {}
@@ -103,6 +105,21 @@ public resetForm(){
 
 }
 
+filterByDateRange(): void {
+  if (!this.searchStartDate || !this.searchEndDate) {
+    alert("Please select both start and end dates for filtering.");
+    return;
+  }
+
+  const start = new Date(this.searchStartDate);
+  const end = new Date(this.searchEndDate);
+  end.setHours(23, 59, 59, 999); // Include the entire end date
+
+  this.bookIssues = this.bookIssues.filter(issue => {
+    const issueDate = new Date(issue.issueDate);
+    return issueDate >= start && issueDate <= end;
+  });
+}
 
 
 

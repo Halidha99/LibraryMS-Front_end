@@ -1,9 +1,10 @@
 <h1 style="text-align: center;">
-  <u>  <i class="bi bi-book-half">Issue Books</i></u>
+  <u><i class="bi bi-book-half"> Issue Books</i></u>
 </h1>
 
-<div class="manage-books-container">
+<div class="container manage-books-container">
   <div class="row">
+    <!-- First Column: Form Section -->
     <div class="col-12 col-md-6">
       <div class="form-section">
         <h2>Issue a Book</h2>
@@ -32,12 +33,18 @@
           <input type="date" id="issue-date" [(ngModel)]="issuseBook.issueDate" required class="form-control">
 
           <!-- Return Date -->
-          <label for="return-date">Return Due Date:</label>
+          <label for="return-date">Return Date:</label>
           <input type="date" id="return-date" [(ngModel)]="issuseBook.returnDate" required class="form-control">
 
           <!-- Issue Button -->
-          <button type="button" class="Add" (click)="addBorrow()">Issue Book</button>
+          <button type="button" class="btn btn-primary" (click)="addBorrow()">Issue Book</button>
         </div>
       </div>
     </div>
 
+    <!-- Second Column: Image Section -->
+    <div class="col-12 col-md-6">
+      <img src="/assets/book-education-illustration-study-library-vector-school-knowledge-bookstore-design-read-s_1013341-838711.jpg" class="img-fluid rounded" alt="Book illustration">
+    </div>
+  </div>
+</div>

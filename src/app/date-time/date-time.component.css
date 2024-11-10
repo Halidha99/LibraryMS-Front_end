@@ -1,12 +1,7 @@
 .date-time {
   font-family: Arial, sans-serif;
   text-align: center;
-
-
-  /* padding: 5px; */
-  /* border: 1px solid #ccc; */
-  /* border-radius: 5px; */
-  /* margin: 10px 0; */
+overflow: hidden;
 }
 
 .date-time p {

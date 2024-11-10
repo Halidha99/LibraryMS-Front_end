@@ -4,6 +4,7 @@
 
   padding: 20px;
   margin: 10px 0;
+  overflow: hidden;
 }
 
 
@@ -13,9 +14,7 @@
   margin-bottom: 15px;
   font-size: 24px;
 }
-/* .tbody{
-  background-color: #0077B6;
-} */
+
 
 .styled-table {
   width: 100%;
