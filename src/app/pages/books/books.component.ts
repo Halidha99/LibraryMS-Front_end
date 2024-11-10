@@ -115,10 +115,7 @@ export class BooksComponent {
 
         this.filteredBookList = this.bookList;
       },
-      (error) => {
-        alert("Error returning the book");
-        console.error('Error returning book:', error);
-      }
+    
     );
   }
 
@@ -142,10 +139,7 @@ export class BooksComponent {
 
           this.filteredBookList = this.bookList;
         },
-        (error) => {
-          alert("Error issuing the book");
-          console.error('Error issuing book:', error);
-        }
+
       );
     } else {
       alert("Book is out of stock and cannot be issued.");

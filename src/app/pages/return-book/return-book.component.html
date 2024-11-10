@@ -1,25 +1,85 @@
-<h2>List of books to be returned</h2>
-<table class="table table-striped" >
-    <thead style="background-color: #007bff;">
+<h1 style="text-align: center;">
+  <u><i class="bi bi-bootstrap-reboot fs-3">List of Books to Be Returned</i></u>
+</h1>
+
+<div class="table-section">
+  <div class="table-container">
+    <table class="styled-table">
+      <thead>
         <tr>
-            <th> Book ID </th>
-            <th> Issue Date </th>
-            <th> Return Date </th>
-            <th> Overdue Date </th>
-            <th> Action </th>
+          <th>Count</th>
+          <th>Book ID</th>
+          <th>Issue Date</th>
+          <th>Return Date</th>
+          <th>Overdue</th>
+          <th>Action</th>
+          <th>Update Qty</th>
         </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let b of borrow">
-            <td> {{ b.id }} </td>
-            <td> {{ b.issueDate }} </td>
-            <td> {{ b.returnDate }} </td>
-            <td> {{ b.dueDate }} </td>
-            <td>
-                <div *ngIf="b.returnDate === null">
-                    <!-- <button (click) = "returnBook(b.borrowId)" class="btn btn-success"> Return </button> -->
-                </div>
-            </td>
+      </thead>
+      <tbody>
+        <tr *ngFor="let issue of bookIssues; index as i">
+          <td>{{ i + 1 }}</td>
+          <td>{{ issue.book.id }}</td>
+          <td>{{ issue.issueDate | date }}</td>
+          <td>{{ issue.returnDate | date }}</td>
+          <td [ngStyle]="{ color: issue.overdue !== 'On time' ? 'red' : 'green' }">
+            {{ issue.overdue }}
+          </td>
+          <td>
+            <label>
+              <input
+                type="radio"
+                [name]="'returned-' + issue.borrowId"
+                [checked]="issue.returned === true"
+                (change)="updateReturnStatus(issue, true)" />
+              Returned
+            </label>
+            <label>
+              <input
+                type="radio"
+                [name]="'returned-' + issue.borrowId"
+                [checked]="issue.returned === false"
+                (change)="updateReturnStatus(issue, false)" />
+              Not Returned
+            </label>
+          </td>
+          <td>
+            <button class="btn btn-primary"
+                    [disabled]="isBookReturned(issue)"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    (click)="updateBook(issue.book)">
+              <i class="bi bi-pencil-square"></i> Edit
+            </button>
+          </td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Single Modal for updating book details -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="exampleModalLabel">Update Book</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="book-id" class="form-label">ID</label>
+          <input type="text" class="form-control" [(ngModel)]="bookTemp.id" id="book-id" disabled>
+        </div>
+        <div class="mb-3">
+          <label for="book-qty" class="form-label">Quantity</label>
+          <input type="number" class="form-control" [(ngModel)]="bookTemp.qty" id="book-qty" placeholder="Enter Quantity">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" (click)="saveBook()" data-bs-dismiss="modal">Update Book</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
